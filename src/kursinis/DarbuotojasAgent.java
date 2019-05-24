@@ -135,7 +135,7 @@ public class DarbuotojasAgent extends Agent {
                                 send(req);
                             } catch (Exception ex) {
                                 System.out.println("A[" + getLocalName() + "] Error while building message: " + ex.getMessage());
-                            }
+                            } System.out.println("Tik testuoju gita");
                         }
                     } else {
                         block();
