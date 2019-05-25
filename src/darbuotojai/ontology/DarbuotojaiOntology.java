@@ -6,11 +6,11 @@ import jade.content.schema.*;
 
 /** file: DarbuotojaiOntology.java
  * @author ontology bean generator
- * @version 2019/05/16, 13:10:48
+ * @version 2019/05/25, 18:41:34
  */
 public class DarbuotojaiOntology extends jade.content.onto.Ontology  {
 
-  private static final long serialVersionUID = -8452648015751330082L;
+  private static final long serialVersionUID = 48383569307505051L;
 
   //NAME
   public static final String ONTOLOGY_NAME = "Darbuotojai";
@@ -24,6 +24,8 @@ public class DarbuotojaiOntology extends jade.content.onto.Ontology  {
    // VOCABULARY
     public static final String INFO_APIE_SAVE_MSG_INFO_APIE_SAVE_MESSAGE="Info_apie_save_message";
     public static final String INFO_APIE_SAVE_MSG="Info_apie_save_msg";
+    public static final String SIMPLEPRANESIMASDARBUOTOJAS_PRANESIMAS="pranesimas";
+    public static final String SIMPLEPRANESIMASDARBUOTOJAS="SimplePranesimasDarbuotojas";
     public static final String INFO_APIE_SAVE_DAUG_INFO_APIE_SAVE_VIENETAS="Info_apie_save_vienetas";
     public static final String INFO_APIE_SAVE_DAUG="Info_apie_save_daug";
     public static final String INFO_APIE_SAVE_ATLYGINIMAS="Atlyginimas";
@@ -52,6 +54,8 @@ public class DarbuotojaiOntology extends jade.content.onto.Ontology  {
     // adding AID(s)
 
     // adding Predicate(s)
+    PredicateSchema simplePranesimasDarbuotojasSchema = new PredicateSchema(SIMPLEPRANESIMASDARBUOTOJAS);
+    add(simplePranesimasDarbuotojasSchema, darbuotojai.ontology.SimplePranesimasDarbuotojas.class);
     PredicateSchema info_apie_save_msgSchema = new PredicateSchema(INFO_APIE_SAVE_MSG);
     add(info_apie_save_msgSchema, darbuotojai.ontology.Info_apie_save_msg.class);
 
@@ -64,6 +68,7 @@ public class DarbuotojaiOntology extends jade.content.onto.Ontology  {
     info_apie_saveSchema.add(INFO_APIE_SAVE_IESKOMA_DARBO_POZICIJA, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
     info_apie_saveSchema.add(INFO_APIE_SAVE_ATLYGINIMAS, (TermSchema)getSchema(BasicOntology.INTEGER), ObjectSchema.MANDATORY);
     info_apie_save_daugSchema.add(INFO_APIE_SAVE_DAUG_INFO_APIE_SAVE_VIENETAS, info_apie_saveSchema, 1, ObjectSchema.UNLIMITED);
+    simplePranesimasDarbuotojasSchema.add(SIMPLEPRANESIMASDARBUOTOJAS_PRANESIMAS, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
     info_apie_save_msgSchema.add(INFO_APIE_SAVE_MSG_INFO_APIE_SAVE_MESSAGE, info_apie_save_daugSchema, 1, ObjectSchema.UNLIMITED);
 
     // adding name mappings

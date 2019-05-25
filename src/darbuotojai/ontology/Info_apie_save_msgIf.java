@@ -6,7 +6,7 @@ import jade.util.leap.*;
 /**
 * Protege name: Info_apie_save_msg
 * @author ontology bean generator
-* @version 2019/05/16, 13:10:48
+* @version 2019/05/25, 18:41:34
 */
 public interface Info_apie_save_msgIf extends jade.content.Predicate {
 

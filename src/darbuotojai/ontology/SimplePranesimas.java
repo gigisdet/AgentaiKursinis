@@ -1,16 +1,16 @@
-package darbdavys.ontology;
+package darbuotojai.ontology;
 
 
-import darbdavys.ontology.*;
+import darbuotojai.ontology.*;
 
 /**
 * Protege name: SimplePranesimas
 * @author ontology bean generator
-* @version 2019/05/18, 19:35:04
+* @version 2019/05/25, 18:24:54
 */
 public class SimplePranesimas implements SimplePranesimasIf {
 
-  private static final long serialVersionUID = 5663662221590769434L;
+  private static final long serialVersionUID = -961240309207303912L;
 
   private String _internalInstanceName = null;
 
@@ -27,7 +27,7 @@ public class SimplePranesimas implements SimplePranesimasIf {
   }
 
    /**
-   * Protege name: Pranesimas
+   * Protege name: pranesimas
    */
    private String pranesimas;
    public void setPranesimas(String value) { 

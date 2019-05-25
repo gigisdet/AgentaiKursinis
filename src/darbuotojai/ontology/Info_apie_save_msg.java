@@ -7,11 +7,11 @@ import darbuotojai.ontology.*;
 /**
 * Protege name: Info_apie_save_msg
 * @author ontology bean generator
-* @version 2019/05/16, 13:10:48
+* @version 2019/05/25, 18:41:34
 */
 public class Info_apie_save_msg implements Info_apie_save_msgIf {
 
-  private static final long serialVersionUID = -8452648015751330082L;
+  private static final long serialVersionUID = 48383569307505051L;
 
   private String _internalInstanceName = null;
 

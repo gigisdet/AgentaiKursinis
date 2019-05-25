@@ -27,9 +27,7 @@ public class AgentLauncher extends Agent {
             sleep(1000);
             actr2 = mc.createNewAgent("Sony", "kursinis.DarbdavysAgent", args);
             actr2.start();
-            AgentController actr3 = mc.createNewAgent("Darbuotoju_srautas_1", "kursinis.DarbuotojasAgent", args);
-            
-            
+            AgentController actr3 = mc.createNewAgent("Darbuotoju_srautas_1", "kursinis.DarbuotojasAgent", args);           
             actr3.start();
         } catch (Exception e) {
             e.printStackTrace();
