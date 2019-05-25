@@ -35,16 +35,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DarbuotojasAgent extends Agent {
-
+    
+    Info_apie_save info = new Info_apie_save();
+    
     @Override
     public void setup() {
         System.out.println("Hello, I'm " + getLocalName() + " and I'm  living in " + this.getContainerController().getName());
+        
+        
+        info.setVardas("Karolis");
+        info.setPavarde("Poga");
+        info.setIeskoma_darbo_pozicija("Inžinierius");
+        info.setAtlyginimas(1000);
+        info.setMiestas("Marijampolė");
+        info.setStazas(1);
 
         DFAgentDescription dfd = new DFAgentDescription();
         dfd.setName(getAID());
         ServiceDescription sd = new ServiceDescription();
-        sd.setType("Darbuotojai");
-        sd.setName("Darbuotojai");
+        sd.setType("Darbuotojas");
+        sd.setName("Darbuotojas");
         dfd.addServices(sd);
 
         addBehaviour(new WaitForMessages());
@@ -54,6 +64,9 @@ public class DarbuotojasAgent extends Agent {
         } catch (FIPAException fe) {
             fe.printStackTrace();
         }
+        
+        
+        
 
     }
 
