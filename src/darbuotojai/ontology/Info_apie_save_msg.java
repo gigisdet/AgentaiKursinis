@@ -7,11 +7,11 @@ import darbuotojai.ontology.*;
 /**
 * Protege name: Info_apie_save_msg
 * @author ontology bean generator
-* @version 2019/05/25, 18:41:34
+* @version 2019/05/25, 21:17:00
 */
 public class Info_apie_save_msg implements Info_apie_save_msgIf {
 
-  private static final long serialVersionUID = 48383569307505051L;
+  private static final long serialVersionUID = 3342814109957283285L;
 
   private String _internalInstanceName = null;
 
@@ -31,10 +31,10 @@ public class Info_apie_save_msg implements Info_apie_save_msgIf {
    * Protege name: Info_apie_save_message
    */
    private List info_apie_save_message = new ArrayList();
-   public void addInfo_apie_save_message(Info_apie_save_daug elem) { 
+   public void addInfo_apie_save_message(Info_apie_save elem) { 
      info_apie_save_message.add(elem);
    }
-   public boolean removeInfo_apie_save_message(Info_apie_save_daug elem) {
+   public boolean removeInfo_apie_save_message(Info_apie_save elem) {
      boolean result = info_apie_save_message.remove(elem);
      return result;
    }

@@ -5,7 +5,7 @@ package darbuotojai.ontology;
 /**
 * Protege name: SimplePranesimasDarbuotojas
 * @author ontology bean generator
-* @version 2019/05/25, 18:41:34
+* @version 2019/05/25, 21:17:00
 */
 public interface SimplePranesimasDarbuotojasIf extends jade.content.Predicate {
 

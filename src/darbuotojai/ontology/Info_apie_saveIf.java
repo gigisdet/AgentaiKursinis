@@ -5,7 +5,7 @@ package darbuotojai.ontology;
 /**
 * Protege name: Info_apie_save
 * @author ontology bean generator
-* @version 2019/05/25, 18:41:34
+* @version 2019/05/25, 21:17:00
 */
 public interface Info_apie_saveIf extends jade.content.Concept {
 

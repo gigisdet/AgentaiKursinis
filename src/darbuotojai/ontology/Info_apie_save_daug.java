@@ -1,17 +1,16 @@
 package darbuotojai.ontology;
 
 
-import jade.util.leap.*;
 import darbuotojai.ontology.*;
 
 /**
 * Protege name: Info_apie_save_daug
 * @author ontology bean generator
-* @version 2019/05/25, 18:41:34
+* @version 2019/05/25, 21:17:00
 */
 public class Info_apie_save_daug implements Info_apie_save_daugIf {
 
-  private static final long serialVersionUID = 48383569307505051L;
+  private static final long serialVersionUID = 3342814109957283285L;
 
   private String _internalInstanceName = null;
 
@@ -30,19 +29,12 @@ public class Info_apie_save_daug implements Info_apie_save_daugIf {
    /**
    * Protege name: Info_apie_save_vienetas
    */
-   private List info_apie_save_vienetas = new ArrayList();
-   public void addInfo_apie_save_vienetas(Info_apie_save elem) { 
-     info_apie_save_vienetas.add(elem);
+   private Info_apie_save info_apie_save_vienetas;
+   public void setInfo_apie_save_vienetas(Info_apie_save value) { 
+    this.info_apie_save_vienetas=value;
    }
-   public boolean removeInfo_apie_save_vienetas(Info_apie_save elem) {
-     boolean result = info_apie_save_vienetas.remove(elem);
-     return result;
+   public Info_apie_save getInfo_apie_save_vienetas() {
+     return this.info_apie_save_vienetas;
    }
-   public void clearAllInfo_apie_save_vienetas() {
-     info_apie_save_vienetas.clear();
-   }
-   public Iterator getAllInfo_apie_save_vienetas() {return info_apie_save_vienetas.iterator(); }
-   public List getInfo_apie_save_vienetas() {return info_apie_save_vienetas; }
-   public void setInfo_apie_save_vienetas(List l) {info_apie_save_vienetas = l; }
 
 }

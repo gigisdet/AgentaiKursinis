@@ -6,11 +6,11 @@ import jade.content.schema.*;
 
 /** file: DarbuotojaiOntology.java
  * @author ontology bean generator
- * @version 2019/05/25, 18:41:34
+ * @version 2019/05/25, 21:17:00
  */
 public class DarbuotojaiOntology extends jade.content.onto.Ontology  {
 
-  private static final long serialVersionUID = 48383569307505051L;
+  private static final long serialVersionUID = 3342814109957283285L;
 
   //NAME
   public static final String ONTOLOGY_NAME = "Darbuotojai";
@@ -67,9 +67,9 @@ public class DarbuotojaiOntology extends jade.content.onto.Ontology  {
     info_apie_saveSchema.add(INFO_APIE_SAVE_MIESTAS, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
     info_apie_saveSchema.add(INFO_APIE_SAVE_IESKOMA_DARBO_POZICIJA, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
     info_apie_saveSchema.add(INFO_APIE_SAVE_ATLYGINIMAS, (TermSchema)getSchema(BasicOntology.INTEGER), ObjectSchema.MANDATORY);
-    info_apie_save_daugSchema.add(INFO_APIE_SAVE_DAUG_INFO_APIE_SAVE_VIENETAS, info_apie_saveSchema, 1, ObjectSchema.UNLIMITED);
+    info_apie_save_daugSchema.add(INFO_APIE_SAVE_DAUG_INFO_APIE_SAVE_VIENETAS, info_apie_saveSchema, ObjectSchema.MANDATORY);
     simplePranesimasDarbuotojasSchema.add(SIMPLEPRANESIMASDARBUOTOJAS_PRANESIMAS, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
-    info_apie_save_msgSchema.add(INFO_APIE_SAVE_MSG_INFO_APIE_SAVE_MESSAGE, info_apie_save_daugSchema, 1, ObjectSchema.UNLIMITED);
+    info_apie_save_msgSchema.add(INFO_APIE_SAVE_MSG_INFO_APIE_SAVE_MESSAGE, info_apie_saveSchema, 1, ObjectSchema.UNLIMITED);
 
     // adding name mappings
 

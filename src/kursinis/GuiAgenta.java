@@ -34,7 +34,9 @@ import jade.domain.FIPAAgentManagement.SearchConstraints;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import jade.util.leap.ArrayList;
 import jade.util.leap.Iterator;
+import jade.util.leap.List;
 import jade.wrapper.ControllerException;
 import static java.lang.Thread.sleep;
 import java.util.Set;
@@ -56,9 +58,19 @@ public class GuiAgenta extends GuiAgent {
     public static final int SearchAllDarbdv = 6;
     public static final int GautiVisusDarbuotojus = 7;
     public static final int SearcAllDarbuotojai = 8;
+    public static final int KandidatuotiDarbas = 9;
     ACLMessage sub;
 
     GUI myGui = null; // Reference to the gui
+    
+
+    Info_apie_save[] darbuotojai = new Info_apie_save[3];
+    
+    Darbo_Info[] darbai = new Darbo_Info[6];
+    Imones_Info[] imones = new Imones_Info[6];
+    int darbaisk = 0;
+    int z = 0;
+    
 
     @Override
     public void setup() {
@@ -82,6 +94,9 @@ public class GuiAgenta extends GuiAgent {
         String Atlyginimas2 = "";
         String Agent_name2 = "";
         String Atlyginimas = "";
+        String darbuotojas = "";
+        String darbdavys = "";
+
         int cmd = ge.getType();
 
         if (cmd == GuiAgenta.SEARCH) {
@@ -142,11 +157,14 @@ public class GuiAgenta extends GuiAgent {
             addBehaviour(new MyOneShot2());
             myGui.addLine("A[" + getLocalName() + "] paspaustas mygtukas ieskoti darbuotoju saraso \n");
             myGui.resetCombo2Lines();
+            myGui.resetCombo3Lines();
+            myGui.resetCombo4Lines();
         }
 
         if (cmd == GuiAgenta.SEARCHPROV2) {
             addBehaviour(new MyOneShot2());
             myGui.resetCombo2Lines();
+
         }
 
         if (cmd == GuiAgenta.SEARCHSarasas) {
@@ -255,9 +273,10 @@ public class GuiAgenta extends GuiAgent {
 
             }
         }
-         if (cmd == GuiAgenta.SearcAllDarbuotojai) {
+        if (cmd == GuiAgenta.SearcAllDarbuotojai) {
+
             // addBehaviour(new WaitForMessages());
-            myGui.addLine("A[" + getLocalName() + "] paspaustas mygtukas ieskoti visu darbuootju");
+            myGui.addLine("A[" + getLocalName() + "] paspaustas mygtukas ieskoti visu darbuootju \n");
             ACLMessage req = new ACLMessage(ACLMessage.INFORM);
             req.setLanguage(codec.getName());
             req.setOntology(onto2.getName());
@@ -283,6 +302,61 @@ public class GuiAgenta extends GuiAgent {
                 }
 
             }
+        }
+
+        if (cmd == GuiAgenta.KandidatuotiDarbas) {
+
+            if (ge.getParameter(1) instanceof String) {
+
+                darbuotojas = (String) ge.getParameter(0).toString();
+                darbdavys = (String) ge.getParameter(1).toString();
+            }
+
+            int darbuotojasInt = Integer.parseInt(darbuotojas);
+            int darbdavysInt = Integer.parseInt(darbdavys);
+
+            // addBehaviour(new WaitForMessages());
+            myGui.addLine("A[" + getLocalName() + "] paspaustas mygtukas kandidatuoti  i darba \n");
+
+            ACLMessage req = new ACLMessage(ACLMessage.INFORM);
+            req.setLanguage(codec.getName());
+            req.setOntology(onto2.getName());
+            ContentManager cm = getContentManager();
+            cm.registerLanguage(codec);
+            cm.registerOntology(onto2);
+
+            AID a;
+            //for (int i = 0; i < myGui.getCombo2LinesCount(); i++) {
+            a = new AID(imones[darbdavysInt].getPavadinimas(), AID.ISLOCALNAME);
+            req.clearAllReceiver();     //Resyveriai cikle "dasideda"
+            req.addReceiver(a);
+
+            //SimplePranesimas s = new SimplePranesimas();
+            //s.setPranesimas("Kandidatuoja "+ darbuotojai[darbuotojasInt].getVardas() +" i pozicija " + darbai[darbdavysInt].getPozicija());
+            Info_apie_save infoapiesave = new Info_apie_save();
+            infoapiesave.setVardas( darbuotojai[darbuotojasInt].getVardas());
+            infoapiesave.setPavarde(darbuotojai[darbuotojasInt].getPavarde());
+            infoapiesave.setAtlyginimas(darbuotojai[darbuotojasInt].getAtlyginimas());
+            infoapiesave.setIeskoma_darbo_pozicija(darbuotojai[darbuotojasInt].getIeskoma_darbo_pozicija());
+            infoapiesave.setAtlyginimas(darbuotojai[darbuotojasInt].getAtlyginimas());
+            infoapiesave.setMiestas(darbuotojai[darbuotojasInt].getMiestas());
+            infoapiesave.setStazas(darbuotojai[darbuotojasInt].getStazas());
+            
+            System.out.println("Spausdinam formuojama message "+ infoapiesave.getVardas());
+            
+            Info_apie_save_msg msg = new Info_apie_save_msg();
+            
+            msg.addInfo_apie_save_message(infoapiesave);
+            
+            try {
+                cm.fillContent(req, msg);
+                req.addUserDefinedParameter("klase", "SimpleMessage");
+                send(req);
+            } catch (Exception ex) {
+                System.out.println("A[" + getLocalName() + "] Error while building messag info apie savee: " + ex.getMessage());
+            }
+
+            //}
         }
     }
 
@@ -370,7 +444,8 @@ public class GuiAgenta extends GuiAgent {
             return (ontology != null && msg.getContent().contains("Darbdavys"));
         }
     } // END of inner class MatchXOntology
-        private class MatchDarbuotojasOntology implements MessageTemplate.MatchExpression {
+
+    private class MatchDarbuotojasOntology implements MessageTemplate.MatchExpression {
 
         public boolean match(ACLMessage msg) {
             String ontology = msg.getOntology();
@@ -391,14 +466,18 @@ public class GuiAgenta extends GuiAgent {
         @Override
         public void action() {
             Ontology onto = DarbdavysOntology.getInstance();
+            Ontology onto2 = DarbuotojaiOntology.getInstance();
             Codec codec = new SLCodec();
             ContentManager cm = getContentManager();
+            ContentManager cm2 = getContentManager();
             cm.registerLanguage(codec);
             cm.registerOntology(onto);
+            cm2.registerLanguage(codec);
+            cm2.registerOntology(onto2);
 
-            
             ACLMessage msgDarbdavys = myAgent.receive(templateDarbdavys);
-            ACLMessage msgDarbuotojas = myAgent.receive(templateDarbuotojas);ACLMessage msg = myAgent.receive();
+            ACLMessage msgDarbuotojas = myAgent.receive(templateDarbuotojas);
+            ACLMessage msg = myAgent.receive();
             if (msgDarbdavys != null) {
                 myGui.addLine("Gauta darbdavys zinuyte is df");
                 try {
@@ -409,6 +488,7 @@ public class GuiAgenta extends GuiAgent {
                         if (dfds[0].getName().getLocalName().equals(myGui.getComboItem(i))) {
                             myGui.removeComboLine(dfds[0].getName().getLocalName());
                             check = 1;
+                            
                         }
                     }
                     if (check == 0) {
@@ -439,6 +519,7 @@ public class GuiAgenta extends GuiAgent {
                         for (int i = 0; i < dfds.length; i++) {
                             myGui.addCombo2Line(dfds[i].getName().getLocalName());
                             myGui.addLine(dfds[i].getName().getLocalName() + "\n");
+
                         }
                     }
                 } catch (Exception ex) {
@@ -447,57 +528,71 @@ public class GuiAgenta extends GuiAgent {
             }
 
             if (msg != null) {
-                try
-                {             
+                try {
                     ContentElement c = cm.extractContent(msg);
+                    ContentElement c2 = cm2.extractContent(msg);
+
                     if (c instanceof Paieska_msg) {
-                            myGui.addLine("A[" + getLocalName() + "] rastas tinkamas darbas pas " + msg.getSender().getLocalName() + " darbdavi \n");
-                            Paieska_msg p = (Paieska_msg) c;
-                            DarbuotojoPaieska_line l = null;
+                        myGui.addLine("A[" + getLocalName() + "] rastas tinkamas darbas pas " + msg.getSender().getLocalName() + " darbdavi \n");
+                        Paieska_msg p = (Paieska_msg) c;
+                        DarbuotojoPaieska_line l = null;
 
-                            Iterator i = p.getAllDarbuotojo_paieska_msg();
-                            while (i.hasNext()) {
-                                l = (DarbuotojoPaieska_line) i.next();
-                                myGui.addLine(l.getMiestas() + l.getPozicija());
+                        Iterator i = p.getAllDarbuotojo_paieska_msg();
+                        while (i.hasNext()) {
+                            l = (DarbuotojoPaieska_line) i.next();
+                            myGui.addLine(l.getMiestas() + l.getPozicija());
 
-                            }
-                        } else if (c instanceof Paieska_pagal_darbdavi) {
-
-                            Paieska_pagal_darbdavi p = (Paieska_pagal_darbdavi) c;
-                            Darbo_Info u = null;
-                            Iterator i = p.getAllPaieskaPagalDarbdaviDaug();
-                            Iterator o;
-                            Imones_Info l = null;
-                            myGui.addLine("Spausdinamas siulomu darbu sąrašas " + msg.getSender().getLocalName() + " imoneje:\n");
-
-                            while (i.hasNext()) {
-                                l = (Imones_Info) i.next();
-                                o = l.getAllDarbai();
-                                while (o.hasNext()) {
-                                    u = (Darbo_Info) o.next();
-                                    myGui.addLine("Darbo id: " + u.getID() + " Pozicija: " + u.getPozicija() + " Miestas: " + u.getMiestas() + " Atlyginimas: " + u.getAtlyginimas() + " Stazas: " + u.getReikalingas_Stazas() + " Darbo valandos: " + u.getValandos());
-
-                                    myGui.addLine("\n");
-                                }
-                                myGui.addLine("\n");
-                            }
-                        } else if (c instanceof Info_apie_save_daug) {
-                            myGui.addLine("Buvo gautas pranesimas info apie save");
-                        } else {
-                            block();
                         }
-                } 
-                catch (Exception ex)
-                {
-                    System.out.println("A["+myAgent.getName()+ "] Ontology parsing error: "+ ex.getMessage());
+                    } else if (c instanceof Paieska_pagal_darbdavi) {
+
+                        Paieska_pagal_darbdavi p = (Paieska_pagal_darbdavi) c;
+                        Darbo_Info u = null;
+                        Iterator i = p.getAllPaieskaPagalDarbdaviDaug();
+                        Iterator o;
+                        Imones_Info l = null;
+                        myGui.addLine("Spausdinamas siulomu darbu sąrašas " + msg.getSender().getLocalName() + " imoneje:\n");
+
+                        while (i.hasNext()) {
+                            l = (Imones_Info) i.next();
+                            o = l.getAllDarbai();
+                            while (o.hasNext()) {
+                                u = (Darbo_Info) o.next();
+                                myGui.addLine("Darbo id: " + u.getID() + " Pozicija: " + u.getPozicija() + " Miestas: " + u.getMiestas() + " Atlyginimas: " + u.getAtlyginimas() + " Stazas: " + u.getReikalingas_Stazas() + " Darbo valandos: " + u.getValandos());
+                                darbai[darbaisk] = u;
+                                imones[darbaisk] = l;
+                                myGui.addLine("\n");
+
+                                myGui.addCombo4Line(imones[darbaisk].getPavadinimas() + darbai[darbaisk].getPozicija());
+                                myGui.addLine("A["+getLocalName()+"] Darbo id: " + darbaisk + "Darbo info "+darbai[darbaisk].getPozicija());
+                                darbaisk++;
+
+                            }
+                            myGui.addLine("\n");
+                        }
+                    } else if (c2 instanceof Info_apie_save_msg) {
+
+                        myGui.addLine("A[" + getLocalName() + "] gauta informacija apie " + msg.getSender().getLocalName() + " darbuotoja \n");
+
+                        Info_apie_save_msg p = (Info_apie_save_msg) c;
+
+                        Info_apie_save l = null;
+
+                        Iterator i = p.getAllInfo_apie_save_message();
+                        while (i.hasNext()) {
+                            l = (Info_apie_save) i.next();
+                            myGui.addLine("Vardas: " + l.getVardas() + ", pavarde: " + l.getPavarde() + " , ieskoma pozicija: " + l.getIeskoma_darbo_pozicija() + " ,miestas: " + l.getMiestas() + " norimas atlyginimas: " + l.getAtlyginimas() + " , stazas: " + l.getStazas() + "\n");
+                            darbuotojai[z] = l;
+                            myGui.addCombo3Line(darbuotojai[z].getVardas());
+                            myGui.addLine("A["+getLocalName()+"] darbuotojo id: "+z + " darbuootjo vardas: "+darbuotojai[z].getVardas());
+                            z++;
+
+                        }
+                    } else {
+                        block();
+                    }
+                } catch (Exception ex) {
+                    System.out.println("A[" + myAgent.getName() + "] Ontology parsing error info apie save msg: " + ex.getMessage());
                 }
-                
-                
-                
-                
-                
-                
-                
 
             }
 

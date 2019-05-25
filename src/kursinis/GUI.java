@@ -51,7 +51,6 @@ public class GUI extends javax.swing.JFrame {
 
     public void removeComboLine(String line) {
         jComboBox1.removeItem(line);
-
     }
 
     public void resetCombo2Lines() {
@@ -66,12 +65,61 @@ public class GUI extends javax.swing.JFrame {
         return jComboBox2.getItemAt(i).toString();
     }
 
+    public int getCombo3SelectedIndex() {
+        return jComboBox3.getSelectedIndex();
+    }
+
     public void removeCombo2Line(String line) {
         jComboBox2.removeItem(line);
 
     }
-        public int getCombo2LinesCount() {
+
+    public int getCombo2LinesCount() {
         int count = jComboBox2.getItemCount();
+        return count;
+    }
+
+    public void resetCombo3Lines() {
+        jComboBox3.removeAllItems();
+    }
+
+    public void addCombo3Line(String line) {
+        jComboBox3.addItem(line);
+    }
+
+    public String getCombo3Item(int i) {
+        return jComboBox3.getItemAt(i).toString();
+    }
+
+    public void removeCombo3Line(String line) {
+        jComboBox3.removeItem(line);
+
+    }
+
+    public int getCombo3LinesCount() {
+        int count = jComboBox3.getItemCount();
+        return count;
+    }
+
+    public void resetCombo4Lines() {
+        jComboBox4.removeAllItems();
+    }
+
+    public void addCombo4Line(String line) {
+        jComboBox4.addItem(line);
+    }
+
+    public String getCombo4Item(int i) {
+        return jComboBox4.getItemAt(i).toString();
+    }
+
+    public void removeCombo4Line(String line) {
+        jComboBox3.removeItem(line);
+
+    }
+
+    public int getCombo4LinesCount() {
+        int count = jComboBox4.getItemCount();
         return count;
     }
 
@@ -127,6 +175,11 @@ public class GUI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBox4 = new javax.swing.JComboBox<>();
+        kandidatuotiDarbas = new javax.swing.JButton();
+        darbuotojasField = new javax.swing.JTextField();
+        darbdavysField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -432,6 +485,21 @@ public class GUI extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        kandidatuotiDarbas.setText("Kandidatuoti");
+        kandidatuotiDarbas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kandidatuotiDarbasActionPerformed(evt);
+            }
+        });
+
+        darbuotojasField.setText("jTextField1");
+
+        darbdavysField.setText("jTextField2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -444,6 +512,19 @@ public class GUI extends javax.swing.JFrame {
                         .addGap(32, 32, 32)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(darbuotojasField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(111, 111, 111)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(187, 187, 187)
+                        .addComponent(kandidatuotiDarbas))
+                    .addComponent(darbdavysField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -455,7 +536,16 @@ public class GUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(64, 64, 64)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(612, 612, 612)
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(kandidatuotiDarbas))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(darbuotojasField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(darbdavysField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(527, 527, 527)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -526,9 +616,17 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-               GuiEvent ge = new GuiEvent(this, GuiAgenta.SearcAllDarbuotojai);
+        GuiEvent ge = new GuiEvent(this, GuiAgenta.SearcAllDarbuotojai);
         myAgent.postGuiEvent(ge);
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void kandidatuotiDarbasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kandidatuotiDarbasActionPerformed
+        GuiEvent ge = new GuiEvent(this, GuiAgenta.KandidatuotiDarbas);
+
+        ge.addParameter(darbuotojasField.getText());
+        ge.addParameter(darbdavysField.getText());
+        myAgent.postGuiEvent(ge);
+    }//GEN-LAST:event_kandidatuotiDarbasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -546,6 +644,8 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTextField Stazas;
     private javax.swing.JTextField Stazas2;
     private javax.swing.JTextField Vardas;
+    private javax.swing.JTextField darbdavysField;
+    private javax.swing.JTextField darbuotojasField;
     private javax.swing.JButton gautiVisusDarbuotojus;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -555,6 +655,8 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -578,5 +680,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea1111;
+    private javax.swing.JButton kandidatuotiDarbas;
     // End of variables declaration//GEN-END:variables
 }

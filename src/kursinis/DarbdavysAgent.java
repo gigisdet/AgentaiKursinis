@@ -96,13 +96,18 @@ public class DarbdavysAgent extends Agent {
             Darbo_Info darb2 = new Darbo_Info();
             darb2.setPozicija("Inžinierius");
             darb2.setValandos(45);
-            darb2.setMiestas("Druskininkai");
-            darb2.setAtlyginimas(850);
+            darb2.setMiestas("Marijampolė");
+            darb2.setAtlyginimas(1850);
             darb2.setReikalingas_Stazas(2);
             darb2.setID(2);
 
             Imones_Info info = new Imones_Info();
-            info.setPavadinimas("Bite Lietuva");
+            String param = "";
+            Object[] args = getArguments();
+            if ((args != null) && (args.length > 0)) {
+                param = (String) args[0];
+            }
+            info.setPavadinimas(param);
             info.setVadovas("Giedrius Senkus");
             info.setGID(1);
 
@@ -202,36 +207,33 @@ public class DarbdavysAgent extends Agent {
                         } catch (Exception ex) {
                             System.out.println("A[" + getLocalName() + "] Error while building message: " + ex.getMessage());
                         }
-                    } else if (h instanceof Info_apie_save_msg) {
+                    } //                    Info_apie_save_msg p = (Info_apie_save_msg) c;
+                    //
+                    //                        Info_apie_save l = null;
+                    //
+                    //                        Iterator i = p.getAllInfo_apie_save_message();
+                    //                        while (i.hasNext()) {
+                    //                            l = (Info_apie_save) i.next();
+                    //                            myGui.addLine("Vardas: " + l.ge
+                    else if (h instanceof Info_apie_save_msg) {
                         Info_apie_save_msg p = (Info_apie_save_msg) c;
-                        Info_apie_save_daug l = null;
+                        Info_apie_save l = null;
                         Iterator i = p.getAllInfo_apie_save_message();
                         Iterator o;
-                        Info_apie_save u = null;
-//                        while (i.hasNext()) {
-//                            l = (Info_apie_save_daug) i.next();
-//                            o = l.getAllInfo_apie_save_vienetas();
-//                            while (o.hasNext()) {
-//                                u = (Info_apie_save) o.next();
-//                                Iterator y = imones.getAllImones_Info_Vienetas();
-//                                Imones_Info z = null;
-//                                while (y.hasNext()) {
-//                                    z = (Imones_Info) y.next();
-//                                    if (u.getStazas() >= z.getDarbas().getReikalingas_Stazas() && u.getMiestas().equals(z.getDarbas().getMiestas()) && u.getAtlyginimas() <= z.getDarbas().getAtlyginimas()) {
-//                                        System.out.println("Darbdavys[" + getLocalName() + "] Naujai užsiregistravęs darbuotojas " + u.getVardas() + " " + u.getPavarde() + " yra tinkamas šiam darbui:");
-//                                        System.out.println("Darbdavys[" + getLocalName() + "] Imones pavadinimas: " + z.getPavadinimas());
-//                                        System.out.println("Darbdavys[" + getLocalName() + "] Imones vadovas: " + z.getVadovas());
-//                                        System.out.println("Darbdavys[" + getLocalName() + "] Darbo pozicija: " + z.getDarbas().getPozicija());
-//                                        System.out.println("Darbdavys[" + getLocalName() + "] Miestas: " + z.getDarbas().getMiestas());
-//                                        System.out.println("Darbdavys[" + getLocalName() + "] Atlyginimas: " + z.getDarbas().getAtlyginimas());
-//                                        System.out.println("Darbdavys[" + getLocalName() + "] Reikalingas stažas: " + z.getDarbas().getReikalingas_Stazas());
-//                                        System.out.println("Darbdavys[" + getLocalName() + "] Darbo valandos: " + z.getDarbas().getValandos());
-//                                    }
-//                                }
-//
-//                            }
-//
-//                        }
+
+                        while (i.hasNext()) {
+                            l = (Info_apie_save) i.next();
+                            for (int j = 0; j < info.getDarbai().size(); j++) {
+                                if (l.getStazas() >= ((Darbo_Info) info.getDarbai().get(j)).getReikalingas_Stazas()
+                                        && l.getAtlyginimas() <= ((Darbo_Info) info.getDarbai().get(j)).getAtlyginimas()
+                                        && l.getMiestas().equals(((Darbo_Info) info.getDarbai().get(j)).getMiestas())
+                                        && l.getIeskoma_darbo_pozicija().equals(((Darbo_Info) info.getDarbai().get(j)).getPozicija())) {
+                                    System.out.println("A[" + getLocalName() + "] gali priimti i darba kandidatuojanti: "+l.getVardas()+" darbyuotoja \n");
+                                }
+
+                            }
+
+                        }
                     } else {
                         block();
                     }

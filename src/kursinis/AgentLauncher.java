@@ -18,17 +18,24 @@ public class AgentLauncher extends Agent {
             String[] args = {""};
             AgentController actrl = mc.createNewAgent("GUI", "kursinis.GuiAgenta", args);
             actrl.start();
-            sleep(1000);
-            AgentController actr2 = mc.createNewAgent("Telia", "kursinis.DarbdavysAgent", args);
+            String[] argsT = {"Telia"};
+            AgentController actr2 = mc.createNewAgent("Telia", "kursinis.DarbdavysAgent", argsT);
             actr2.start();
-            sleep(1000);
-            actr2 = mc.createNewAgent("Hella", "kursinis.DarbdavysAgent", args);
+            String[] argsH = {"Hella"};
+            actr2 = mc.createNewAgent("Hella", "kursinis.DarbdavysAgent", argsH);
             actr2.start();
-            sleep(1000);
-            actr2 = mc.createNewAgent("Sony", "kursinis.DarbdavysAgent", args);
+            String[] argsS = {"Sony"};
+            actr2 = mc.createNewAgent("Sony", "kursinis.DarbdavysAgent", argsS);
             actr2.start();
-            AgentController actr3 = mc.createNewAgent("Darbuotoju_srautas_1", "kursinis.DarbuotojasAgent", args);           
+            String[] argsP = {"Petras"};
+            AgentController actr3 = mc.createNewAgent("Petras", "kursinis.DarbuotojasAgent", argsP);
             actr3.start();
+            String[] argsJ = {"Juozas"};
+            AgentController actr4 = mc.createNewAgent("Juozas", "kursinis.DarbuotojasAgent", argsJ);
+            actr4.start();
+            String[] argsA = {"Aloyzas"};
+            AgentController actr5 = mc.createNewAgent("Aloyzas", "kursinis.DarbuotojasAgent", argsA);
+            actr5.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
