@@ -85,14 +85,6 @@ public class DarbdavysAgent extends Agent {
             cm.registerLanguage(codec);
             cm.registerOntology(onto);
 
-            Darbo_Info darb = new Darbo_Info();
-            darb.setPozicija("Mobiliųjų įrenginių konfigūravimo ekspertas");
-            darb.setValandos(40);
-            darb.setMiestas("Alytus");
-            darb.setAtlyginimas(1000);
-            darb.setReikalingas_Stazas(1);
-            darb.setID(1);
-
             Darbo_Info darb2 = new Darbo_Info();
             darb2.setPozicija("Inžinierius");
             darb2.setValandos(45);
@@ -110,8 +102,6 @@ public class DarbdavysAgent extends Agent {
             info.setPavadinimas(param);
             info.setVadovas("Giedrius Senkus");
             info.setGID(1);
-
-            info.addDarbai(darb);
             info.addDarbai(darb2);
 
             ACLMessage msg = myAgent.receive();
@@ -131,13 +121,11 @@ public class DarbdavysAgent extends Agent {
                         System.out.println("A[" + getLocalName() + "] Pranešimas gautas:");
                         System.out.println("");
                         Iterator i = p.getAllDarbuotojo_paieska_msg();
-                        int darbas1 = 0;
-                        int darbas2 = 0;
-                        int darbas3 = 0;
+
                         while (i.hasNext()) {
                             l = (DarbuotojoPaieska_line) i.next();
                             for (int j = 0; j < info.getDarbai().size(); j++) {
-                                if (l.getReikalingas_stazas() <= ((Darbo_Info) info.getDarbai().get(j)).getReikalingas_Stazas() && l.getPozicija().equals(((Darbo_Info) info.getDarbai().get(j)).getPozicija())
+                                if (l.getReikalingas_stazas() >= ((Darbo_Info) info.getDarbai().get(j)).getReikalingas_Stazas() && l.getPozicija().equals(((Darbo_Info) info.getDarbai().get(j)).getPozicija())
                                         && l.getAtlyginimas() <= ((Darbo_Info) info.getDarbai().get(j)).getAtlyginimas()) {
                                     ACLMessage omsg = new ACLMessage(ACLMessage.INFORM);
                                     omsg.setLanguage(codec.getName());
@@ -165,25 +153,6 @@ public class DarbdavysAgent extends Agent {
                                     }
                                 }
                             }
-//                            System.out.println("Darbdavys[" + getLocalName() + "] Išvedami visi atitinkami darbai:");
-//
-//                            Iterator o = imones.getAllImones_Info_Vienetas();
-//                            Imones_Info z = null;
-//                            while (o.hasNext()) {
-//                                z = (Imones_Info) o.next();
-//                                if (l.getReikalingas_stazas() >= z.getDarbas().getReikalingas_Stazas() && l.getPozicija().equals(z.getDarbas().getPozicija()) && l.getAtlyginimas() <= z.getDarbas().getAtlyginimas()) {
-//                                    System.out.println("Darbdavys[" + getLocalName() + "] Pagal pasirinktus kriterijus surastas darbas: \n");
-//                                    System.out.println("Darbdavys[" + getLocalName() + "] Imones pavadinimas: " + z.getPavadinimas());
-//                                    System.out.println("Darbdavys[" + getLocalName() + "] Imones vadovas: " + z.getVadovas());
-//                                    System.out.println("Darbdavys[" + getLocalName() + "] Darbo pozicija: " + z.getDarbas().getPozicija());
-//                                    System.out.println("Darbdavys[" + getLocalName() + "] Miestas: " + z.getDarbas().getMiestas());
-//                                    System.out.println("Darbdavys[" + getLocalName() + "] Atlyginimas: " + z.getDarbas().getAtlyginimas());
-//                                    System.out.println("Darbdavys[" + getLocalName() + "] Reikalingas stažas: " + z.getDarbas().getReikalingas_Stazas());
-//                                    System.out.println("Darbdavys[" + getLocalName() + "] Darbo valandos: " + z.getDarbas().getValandos());
-//                                } else {
-//                                    System.out.println("Darbdavys[" + getLocalName() + "] Pagal pasirinktus kriterijus darbo vietų nėra.\n");
-//                                }
-//                            }
 
                         }
                         //
@@ -207,15 +176,7 @@ public class DarbdavysAgent extends Agent {
                         } catch (Exception ex) {
                             System.out.println("A[" + getLocalName() + "] Error while building message: " + ex.getMessage());
                         }
-                    } //                    Info_apie_save_msg p = (Info_apie_save_msg) c;
-                    //
-                    //                        Info_apie_save l = null;
-                    //
-                    //                        Iterator i = p.getAllInfo_apie_save_message();
-                    //                        while (i.hasNext()) {
-                    //                            l = (Info_apie_save) i.next();
-                    //                            myGui.addLine("Vardas: " + l.ge
-                    else if (h instanceof Info_apie_save_msg) {
+                    } else if (h instanceof Info_apie_save_msg) {
                         Info_apie_save_msg p = (Info_apie_save_msg) c;
                         Info_apie_save l = null;
                         Iterator i = p.getAllInfo_apie_save_message();
@@ -228,7 +189,15 @@ public class DarbdavysAgent extends Agent {
                                         && l.getAtlyginimas() <= ((Darbo_Info) info.getDarbai().get(j)).getAtlyginimas()
                                         && l.getMiestas().equals(((Darbo_Info) info.getDarbai().get(j)).getMiestas())
                                         && l.getIeskoma_darbo_pozicija().equals(((Darbo_Info) info.getDarbai().get(j)).getPozicija())) {
-                                    System.out.println("A[" + getLocalName() + "] gali priimti i darba kandidatuojanti: "+l.getVardas()+" darbyuotoja \n");
+                                    //
+                                    System.out.println("A[" + getLocalName() + "] gali priimti i darba kandidatuojanti: " + l.getVardas() + " darbyuotoja \n");
+                                    //                                    //                                    
+                                    //Vietoj sito reiktu pasiusti pranesima atgal su info kad kandidatas yra tinkamas ir 
+                                    //atspausdinus pranesima kad buvo priimtas nukilinti darbdavi ir darbuotoja
+                                    //
+                                    //ir reiktu pranesimo kad jei netinkamas kandidatas kad taip pat pasiustu pranesima atgal 
+                                    //kad darbuotojas yra netinkamas
+                                    //
                                 }
 
                             }
@@ -248,81 +217,4 @@ public class DarbdavysAgent extends Agent {
         }
     }
 
-//    void readFiles(String FileName) 
-//    {
-//        try {
-//            BufferedReader in = new BufferedReader(new FileReader(FileName));
-//            String str;
-//            String[] parts = null;
-//            int i = 0;
-//            while ((str = in.readLine()) != null)
-//            {
-//                parts = str.split(" ");  
-//                Darbo_Info darb = new Darbo_Info();
-//                            darb.setPozicija(parts[0]);
-//            darb.setValandos(Integer.parseInt(parts[1]));
-//            
-//            darb.setMiestas(parts[2]);
-//            
-//            darb.setAtlyginimas(Integer.parseInt(parts[3]));
-//            darb.setReikalingas_Stazas(Integer.parseInt(parts[4]));
-//            darb.setID(Integer.parseInt(parts[5]));
-//                
-//                autorius.setVardas(parts[0]);
-//                autorius.setPavarde(parts[1]);
-//                autorius.setGimimoMetai(Integer.parseInt(parts[2]));
-//                autorius.setSalis(parts[3]);
-//                darbuotojai[i] =darbuotojas;
-//                i++;
-//            }  
-//            in.close();
-//            
-//            
-//            in = new BufferedReader(new FileReader("savininkai.txt"));
-//            parts = null;
-//            i = 0;
-//            while ((str = in.readLine()) != null)
-//            {
-//                parts = str.split(" ");
-//                Asmuo savininkas = new Asmuo();                
-//                savininkas.setVardas(parts[0]);
-//                savininkas.setPavarde(parts[1]);
-//                savininkas.setGimimoMetai(Integer.parseInt(parts[2]));
-//                savininkas.setSalis(parts[3]);
-//                savininkai[i] = savininkas;
-//                i++;
-//            }  
-//            in.close();
-//            
-//            
-//            in = new BufferedReader(new FileReader(FileName));
-//            parts = null;
-//            i = 0;
-//            while ((str = in.readLine()) != null)
-//            {
-//                parts = str.split(" ");  
-//                Paveikslas pav = new Paveikslas();
-//                pav.setID(Integer.parseInt(parts[0]));
-//                pav.setPavadinimas(parts[1]);
-//                pav.setStilius(parts[2]);
-//                pav.setAutorius(menininkai[Integer.parseInt(parts[3])]);
-//                pav.setMetai(Integer.parseInt(parts[4]));
-//                pav.setKaina(Float.parseFloat(parts[5]));
-//                PaveiksloMatmenys mat = new PaveiksloMatmenys();
-//                    mat.setIlgis(Integer.parseInt(parts[6]));
-//                    mat.setPlotis(Integer.parseInt(parts[7]));
-//                pav.setMatmenys(mat);
-//                pav.setSavininkas(savininkai[Integer.parseInt(parts[8])]);
-//                pav.setParduotas(false);
-//                paveikslai[i] = pav;
-//                i++;
-//            }  
-//            in.close();
-//            
-//            System.out.println("S[" + getName() + "] Turimi paveikslai: ");
-//            for(int j = 0; j < paveikslai.length; j++)
-//                System.out.println("S[" + getName() + "] " + paveikslai[j].getID() + " " + paveikslai[j].getPavadinimas());
-//            } 
-//        catch (IOException e) {}
-//    }
 }

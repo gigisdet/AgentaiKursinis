@@ -62,15 +62,13 @@ public class GuiAgenta extends GuiAgent {
     ACLMessage sub;
 
     GUI myGui = null; // Reference to the gui
-    
 
     Info_apie_save[] darbuotojai = new Info_apie_save[3];
-    
+
     Darbo_Info[] darbai = new Darbo_Info[6];
     Imones_Info[] imones = new Imones_Info[6];
     int darbaisk = 0;
     int z = 0;
-    
 
     @Override
     public void setup() {
@@ -159,6 +157,8 @@ public class GuiAgenta extends GuiAgent {
             myGui.resetCombo2Lines();
             myGui.resetCombo3Lines();
             myGui.resetCombo4Lines();
+            darbaisk = 0;
+            z = 0;
         }
 
         if (cmd == GuiAgenta.SEARCHPROV2) {
@@ -334,20 +334,20 @@ public class GuiAgenta extends GuiAgent {
             //SimplePranesimas s = new SimplePranesimas();
             //s.setPranesimas("Kandidatuoja "+ darbuotojai[darbuotojasInt].getVardas() +" i pozicija " + darbai[darbdavysInt].getPozicija());
             Info_apie_save infoapiesave = new Info_apie_save();
-            infoapiesave.setVardas( darbuotojai[darbuotojasInt].getVardas());
+            infoapiesave.setVardas(darbuotojai[darbuotojasInt].getVardas());
             infoapiesave.setPavarde(darbuotojai[darbuotojasInt].getPavarde());
             infoapiesave.setAtlyginimas(darbuotojai[darbuotojasInt].getAtlyginimas());
             infoapiesave.setIeskoma_darbo_pozicija(darbuotojai[darbuotojasInt].getIeskoma_darbo_pozicija());
             infoapiesave.setAtlyginimas(darbuotojai[darbuotojasInt].getAtlyginimas());
             infoapiesave.setMiestas(darbuotojai[darbuotojasInt].getMiestas());
             infoapiesave.setStazas(darbuotojai[darbuotojasInt].getStazas());
-            
-            System.out.println("Spausdinam formuojama message "+ infoapiesave.getVardas());
-            
+
+            System.out.println("Spausdinam formuojama message " + infoapiesave.getVardas());
+
             Info_apie_save_msg msg = new Info_apie_save_msg();
-            
+
             msg.addInfo_apie_save_message(infoapiesave);
-            
+
             try {
                 cm.fillContent(req, msg);
                 req.addUserDefinedParameter("klase", "SimpleMessage");
@@ -488,7 +488,7 @@ public class GuiAgenta extends GuiAgent {
                         if (dfds[0].getName().getLocalName().equals(myGui.getComboItem(i))) {
                             myGui.removeComboLine(dfds[0].getName().getLocalName());
                             check = 1;
-                            
+
                         }
                     }
                     if (check == 0) {
@@ -519,6 +519,7 @@ public class GuiAgenta extends GuiAgent {
                         for (int i = 0; i < dfds.length; i++) {
                             myGui.addCombo2Line(dfds[i].getName().getLocalName());
                             myGui.addLine(dfds[i].getName().getLocalName() + "\n");
+                            
 
                         }
                     }
@@ -562,8 +563,8 @@ public class GuiAgenta extends GuiAgent {
                                 imones[darbaisk] = l;
                                 myGui.addLine("\n");
 
-                                myGui.addCombo4Line(imones[darbaisk].getPavadinimas() + darbai[darbaisk].getPozicija());
-                                myGui.addLine("A["+getLocalName()+"] Darbo id: " + darbaisk + "Darbo info "+darbai[darbaisk].getPozicija());
+                                myGui.addCombo4Line(imones[darbaisk].getPavadinimas());
+                                myGui.addLine("A[" + getLocalName() + "] Darbo id: " + darbaisk + "Darbo info " + darbai[darbaisk].getPozicija());
                                 darbaisk++;
 
                             }
@@ -583,7 +584,7 @@ public class GuiAgenta extends GuiAgent {
                             myGui.addLine("Vardas: " + l.getVardas() + ", pavarde: " + l.getPavarde() + " , ieskoma pozicija: " + l.getIeskoma_darbo_pozicija() + " ,miestas: " + l.getMiestas() + " norimas atlyginimas: " + l.getAtlyginimas() + " , stazas: " + l.getStazas() + "\n");
                             darbuotojai[z] = l;
                             myGui.addCombo3Line(darbuotojai[z].getVardas());
-                            myGui.addLine("A["+getLocalName()+"] darbuotojo id: "+z + " darbuootjo vardas: "+darbuotojai[z].getVardas());
+                            myGui.addLine("A[" + getLocalName() + "] darbuotojo id: " + z + " darbuootjo vardas: " + darbuotojai[z].getVardas());
                             z++;
 
                         }
